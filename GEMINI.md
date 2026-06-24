@@ -6,6 +6,8 @@
 - Plan large, risky, or cross-cutting changes.
 - Keep changes scoped; do not perform broad rewrites.
 - Preserve strict TypeScript, offline-first behavior, API contracts, tests, security, privacy, docs, and 500-line source limit.
+- Treat all controllable warnings, errors, and dependency advisories as blockers.
+- Require the exact `AGENTS.md` approval phrase before commit, push, PR, merge, release, tag, repository-setting, or destructive Git operations.
 - Never commit secrets or trust client-side authorization.
 - Report commands actually run, results, skipped gates, limitations, and remaining risks.
 - Do not claim completion until `AGENTS.md` definition of done is satisfied.

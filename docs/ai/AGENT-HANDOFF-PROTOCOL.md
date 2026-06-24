@@ -39,6 +39,21 @@ Handoff notes are mandatory when:
 - Receiving agent MUST reject stale or conflicting handoff assumptions.
 - Ownership transfers only after prior owner stops editing assigned files.
 
+## GitOps Approval Handoff
+
+AI agents MAY prepare Git/GitHub operations, but MUST NOT execute them until the maintainer supplies the matching exact phrase:
+
+- `APPROVE COMMIT`
+- `APPROVE PUSH`
+- `APPROVE PR CREATE`
+- `APPROVE MERGE`
+- `APPROVE RELEASE`
+- `APPROVE TAG`
+- `APPROVE REPO SETTINGS`
+- `APPROVE DESTRUCTIVE GIT`
+
+Before requesting approval, include current branch, `git status --short`, `git diff --stat`, proposed commit message, exact commands, validation results, risks, and rollback plan. Each approval covers only the named operation; no approval chains to later operations.
+
 ## Blocker Escalation
 
 Report:

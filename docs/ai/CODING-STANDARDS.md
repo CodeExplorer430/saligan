@@ -73,13 +73,13 @@ Source files MUST stay below 500 physical lines:
 
 - 350 lines: evaluate split.
 - 450 lines: refactor before adding logic unless documented exception.
-- Over 500 lines: maintainer-approved PR exception required.
+- 500 lines or above: prohibited; do not weaken or bypass the limit.
 
 Generated files, lockfiles, migrations, snapshots, schema dumps, compiled artifacts, and documentation are exempt.
 
 ## Style and Tooling
 
-Use repository ESLint, Prettier, TypeScript, and test configuration. Do not add local style exceptions to bypass valid findings. Formatting-only changes MUST not obscure behavioral diffs.
+Use repository ESLint, Prettier, TypeScript, and test configuration. ESLint MUST run with `--max-warnings=0`. Code, tests, typecheck, build, and documentation output MUST contain zero controllable warnings and errors. Do not add local style exceptions to bypass valid findings. Formatting-only changes MUST not obscure behavioral diffs.
 
 Current shared boundaries:
 

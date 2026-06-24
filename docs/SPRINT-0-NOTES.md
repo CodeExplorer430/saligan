@@ -12,8 +12,8 @@ Prepare implementation-ready repository baseline without implementing product fe
 
 - Git repository exists on `main`.
 - Sprint work uses `chore/sprint-0b-bootstrap`.
-- No remote is configured at Sprint start.
-- No commit or push has been performed for Sprint 0B.
+- No remote was configured at Sprint start; a remote and pull request now exist.
+- Sprint 0B baseline was committed and pushed before the current remediation pass.
 - Existing AI Agent Governance Pack remains canonical.
 
 ## Workspace Baseline
@@ -77,7 +77,25 @@ Validated locally on 2026-06-24:
 
 Vitest initially could not resolve `localhost` inside restricted sandbox. Same tests passed with normal local process/network permissions. This was an execution-environment restriction, not a repository failure.
 
-Remote GitHub Actions were not run and are not claimed as passing.
+At initial local validation, remote GitHub Actions had not run and were not claimed as passing. Pull request workflow results are recorded below.
+
+## Pull Request Security Remediation
+
+Pull request #6 ran the Sprint 0 baseline workflows on 2026-06-24. Quality gates, PostgreSQL smoke, production audit, and secret scan passed. Dependency Review failed on moderate advisory `GHSA-67mh-4wv8-2f99` because `drizzle-kit` transitively installed `esbuild@0.18.20` through deprecated `@esbuild-kit` loader packages.
+
+Latest stable `drizzle-kit@0.31.10` still includes that transitive chain, so a narrowly scoped pnpm override moves only `@esbuild-kit/core-utils` to the first published patched `esbuild` release, `0.25.0`. Additional scoped overrides move Markdown tooling to `markdown-it@14.2.0`, Vite tooling to `esbuild@0.28.1`, and Workbox transitive packages away from deprecated `glob@11.1.0` and `source-map@0.8.0-beta.0`.
+
+The security workflow now uses a zero-advisory audit at low severity. Dependency Review still blocks high and critical additions and reports lower risk, while OpenSSF Scorecard output remains informational. License review remains enabled without an unaudited allowlist.
+
+GitHub Actions were upgraded to Node 24 runtime releases: `actions/checkout@v7`, `actions/setup-node@v6`, `actions/dependency-review-action@v5`, `pnpm/action-setup@v6`, and `gitleaks/gitleaks-action@v3`.
+
+### Maintainer-Waived Upstream Warnings
+
+Latest stable `drizzle-kit@0.31.10` emits installation deprecation warnings for `@esbuild-kit/core-utils@3.3.2` and `@esbuild-kit/esm-loader@2.6.5`. Source and owner: Drizzle ORM upstream dependency chain. A coordinated Drizzle 1.0 release-candidate migration was rejected for Sprint 0 because it changes ORM APIs and failed compatibility checks against the stable schema/client baseline. Maintainer selected stable Drizzle with upstream tracking. Recheck when stable Drizzle 1.0 removes the deprecated loader chain.
+
+These are upstream package-maintenance warnings, not known vulnerabilities or codebase warnings. No other warning is waived.
+
+Remote GitHub Actions must be rerun after the remediation is pushed. No remote pass is claimed until that run is green.
 
 ## Known Limitations
 

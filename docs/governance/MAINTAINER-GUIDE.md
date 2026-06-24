@@ -18,7 +18,7 @@ Maintainers MUST verify source traceability, acceptance criteria, security/priva
 Record decisions for:
 
 - architecture or framework exceptions;
-- source files over 500 lines;
+- attempted source-file additions at 500 lines or above;
 - failed/waived gates;
 - irreversible migrations;
 - security risk acceptance;

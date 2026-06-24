@@ -10,7 +10,7 @@
 
 - Domain rules are centralized and edge cases handled.
 - Public API, schema, offline, and compatibility effects are intentional.
-- Source files remain below 500 lines or approved exception exists.
+- Every non-exempt source file remains below 500 physical lines.
 - Errors, retries, transactions, and concurrency are safe.
 
 ## Security and Privacy
@@ -26,7 +26,9 @@
 - Frozen install, formatting, and documentation checks pass.
 - Tests map to changed behavior and regressions.
 - Required local/CI/Docker/migration/smoke gates ran.
-- Production dependency audit findings are resolved or documented.
+- Full dependency audit passes at low severity with zero findings.
+- Lint, tests, build, documentation, Docker, and CI contain zero controllable warnings.
+- External/upstream warnings name source, owner, follow-up, and maintainer waiver.
 - Failed or skipped gates are explicit.
 - Deployment, backup, recovery, and rollback are credible.
 

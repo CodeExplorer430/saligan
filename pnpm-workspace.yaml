@@ -8,3 +8,8 @@ allowBuilds:
 
 overrides:
   js-yaml: 4.2.0
+  "@esbuild-kit/core-utils>esbuild": 0.25.0
+  "markdownlint-cli2>markdown-it": 14.2.0
+  "vite>esbuild": 0.28.1
+  "workbox-build>glob": 13.0.6
+  "workbox-build>source-map": 0.7.6

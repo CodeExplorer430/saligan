@@ -73,7 +73,11 @@ Logs MUST be structured, access-controlled, and free of credentials, tokens, pas
 - Never use production credentials in development, tests, docs, or CI.
 - Pin and review dependencies; verify maintenance and license.
 - Assess audit findings before upgrades.
-- Run `pnpm audit --prod`; current security workflow blocks high-severity findings.
+- Run `pnpm audit --audit-level low`; zero known vulnerabilities are permitted, including development-only low and moderate findings.
+- Dependency Review blocks newly introduced high and critical vulnerabilities in runtime, development, and unknown scopes and reports lower-severity findings. Full audit remains stricter and MUST be clean.
+- OpenSSF Scorecard results are informational dependency risk signals and do not independently block Sprint 0 pull requests.
+- Keep license review enabled. Add an allowlist only after auditing it for AGPL-3.0-or-later compatibility; do not suppress individual advisories or licenses without documented maintainer acceptance.
+- Do not use audit ignores, advisory suppression, `continue-on-error`, or weakened severity thresholds to obtain a pass.
 
 ## Security Escalation
 

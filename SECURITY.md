@@ -38,3 +38,5 @@ Security requirements and engineering controls are defined in:
 - `docs/ai/SECURITY-RULES.md`;
 - `docs/14-security-baseline.md`;
 - `docs/ai/QUALITY-GATES.md`.
+
+Known dependency vulnerabilities at any severity, including development-only findings, block completion. Vulnerabilities must be remediated rather than ignored or suppressed.

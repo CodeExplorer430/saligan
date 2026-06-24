@@ -7,7 +7,7 @@
     "build": "tsc -b && vite build",
     "clean": "rimraf dist",
     "dev": "vite",
-    "lint": "eslint src vite.config.ts",
+    "lint": "eslint src vite.config.ts --max-warnings=0",
     "test": "vitest run",
     "typecheck": "tsc -b --pretty false"
   },

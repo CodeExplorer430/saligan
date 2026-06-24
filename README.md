@@ -10,7 +10,7 @@ Development follows Spec-Driven Development with strict AI Agent Governance. Rea
 
 ## Repository Status
 
-SALIGAN is pre-MVP. Sprint 0A governance and Sprint 0B implementation scaffold exist on `chore/sprint-0b-bootstrap` but remain uncommitted and unpushed.
+SALIGAN is pre-MVP. Sprint 0A governance and Sprint 0B implementation scaffold are under review in pull request #6 from `chore/sprint-0b-bootstrap`.
 
 - pnpm 11 and Turborepo monorepo;
 - React/Vite offline-first web shell;
@@ -20,7 +20,7 @@ SALIGAN is pre-MVP. Sprint 0A governance and Sprint 0B implementation scaffold e
 
 Product workflows remain placeholders until approved requirements are implemented.
 
-Local Sprint 0B checks passed. Remote GitHub Actions have not run because no remote is configured.
+Local Sprint 0B checks passed. Remote GitHub Actions have run; merge remains blocked until the Dependency Review remediation is pushed and the workflow reruns green.
 
 ## Quick Start
 
@@ -79,6 +79,11 @@ pnpm test
 pnpm format
 pnpm format:check
 pnpm docs:check
+pnpm audit:zero
+pnpm source:size
+pnpm checks:zero
+pnpm ci:local
+pnpm validate:pr
 pnpm clean
 pnpm db:generate
 pnpm db:migrate
@@ -115,10 +120,13 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm audit --audit-level low
+pnpm source:size
 docker compose config
 ```
 
 Infrastructure/database changes also require PostgreSQL startup and migration validation.
+All controllable warnings and errors are blockers. Known dependency vulnerabilities are prohibited at every severity and scope.
 
 ## Next Milestone
 
@@ -130,6 +138,10 @@ Implement first requirement-traced vertical slice: pure timekeeping domain calcu
 - [Contribution guide](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [Documentation index](docs/README.md)
+
+Dependency Review blocks newly introduced high and critical vulnerabilities and reports lower risks. Full audit policy is stricter: `pnpm audit --audit-level low` must report zero findings. OpenSSF Scorecard output remains informational.
+
+AI agents may prepare Git/GitHub operations, but exact maintainer approval phrases from [AGENTS.md](AGENTS.md) are required before commit, push, PR creation, merge/close, release, tag, repository-setting, or destructive Git operations.
 
 Never place secrets or real student records in source, tests, issues, logs, or prompts.
 

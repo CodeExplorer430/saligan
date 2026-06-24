@@ -2,6 +2,8 @@ AGENTS.md is canonical. Read it before editing.
 Trace behavior to an accepted spec, issue, ADR, or maintainer instruction.
 Plan large or risky changes. Keep edits narrow. Avoid broad rewrites.
 Keep source files below 500 lines; refactor before adding logic at 450 lines.
+Treat all controllable warnings, errors, and dependency advisories as blockers.
+Use AGENTS.md exact approval phrases before Git/GitHub write operations.
 Add or update tests for behavior changes. Never weaken tests to pass.
 Update relevant docs and contracts with behavior changes.
 Validate input and enforce server-side object-level authorization.

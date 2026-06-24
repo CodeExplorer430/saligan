@@ -33,6 +33,7 @@ Detailed responsibilities live in `AGENT-ROLES.md`.
 - Agent MUST inspect status/diff before edits and after work.
 - Agent MUST NOT overwrite or reformat another agent's changes.
 - Scope expansion requires Orchestrator or maintainer approval.
+- Git/GitHub writes require the exact operation-specific approval phrase defined in `AGENTS.md`.
 
 Recommended Sprint workspace ownership:
 
@@ -89,5 +90,6 @@ Orchestrator MUST verify:
 - requirement and test traceability present;
 - contracts and docs synchronized;
 - all applicable gates recorded;
+- controllable warnings, errors, and dependency advisories resolved;
 - no unreviewed unrelated diff;
 - handoffs closed or explicitly tracked.
