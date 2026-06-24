@@ -29,30 +29,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Detect lockfile
-        id: lock
-        shell: bash
-        run: |
-          if [[ -f pnpm-lock.yaml ]]; then
-            echo "value=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "value=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Skipping pnpm audit until pnpm-lock.yaml exists."
-          fi
-
       - uses: pnpm/action-setup@v4
-        if: steps.lock.outputs.value == 'true'
         with:
           version: 11.0.0
 
       - uses: actions/setup-node@v4
-        if: steps.lock.outputs.value == 'true'
         with:
           node-version: 24
           cache: pnpm
 
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
       - name: Audit production dependencies
-        if: steps.lock.outputs.value == 'true'
         run: pnpm audit --prod --audit-level=high
 
   secret-scan:

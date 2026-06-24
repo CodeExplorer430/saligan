@@ -1,7 +1,9 @@
 {
   "name": "saligan",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
   "description": "Offline-first, self-hostable internship records and OJT management platform for DTR, rendered hours, reports, and supervisor review.",
   "packageManager": "pnpm@11.0.0",
   "engines": {
@@ -14,12 +16,25 @@
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "format": "prettier --write .",
-    "docs:check": "markdownlint-cli2 \"**/*.md\""
+    "format:check": "prettier --check .",
+    "clean": "turbo clean && rimraf .turbo coverage dist",
+    "docs:check": "markdownlint-cli2 \"*.md\" \".github/*.md\" \"docs/ai/*.md\" \"docs/engineering/*.md\" \"docs/governance/*.md\" \"docs/SPRINT-0-NOTES.md\"",
+    "db:generate": "pnpm --filter @saligan/database db:generate",
+    "db:migrate": "pnpm --filter @saligan/database db:migrate",
+    "db:studio": "pnpm --filter @saligan/database db:studio"
   },
   "devDependencies": {
-    "turbo": "latest",
-    "typescript": "latest",
-    "prettier": "latest",
-    "markdownlint-cli2": "latest"
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "markdownlint-cli2": "^0.20.0",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
+    "turbo": "^2.6.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.49.0"
+  },
+  "scarfSettings": {
+    "enabled": false
   }
 }

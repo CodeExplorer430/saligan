@@ -1,20 +1,16 @@
 digraph SystemContext {
-  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN System Context"];
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Sprint 0B System Context"];
   node [shape=box, style="rounded,filled", fillcolor="#F8F8F8", color="#333333", fontname="Arial"];
   edge [fontname="Arial", color="#555555"];
 
-  Intern [shape=oval, fillcolor="#E8F1FF", label="Student Intern"];
-  Supervisor [shape=oval, fillcolor="#E8F1FF", label="Company Supervisor"];
-  Coordinator [shape=oval, fillcolor="#E8F1FF", label="Academic Coordinator"];
-  Admin [shape=oval, fillcolor="#E8F1FF", label="Organization Admin"];
-  SALIGAN [fillcolor="#FFF4D6", label="SALIGAN\nStudent Attendance, Logbook, Internship Goals,\nAccomplishments, and Notes"];
-  SMTP [fillcolor="#F1F1F1", label="SMTP Server\nNotifications"];
-  Calendar [fillcolor="#F1F1F1", label="Calendar Apps\nICS reminders"];
+  Developer [shape=oval, fillcolor="#E8F1FF", label="Developer"];
+  FutureUser [shape=oval, fillcolor="#E8F1FF", label="Future SALIGAN User"];
+  SALIGAN [fillcolor="#FFF4D6", label="SALIGAN\nPre-MVP Sprint 0B scaffold"];
+  Postgres [shape=cylinder, fillcolor="#E8FFE8", label="PostgreSQL 18\nMigrated schema baseline"];
+  Planned [style="rounded,dashed", label="Planned capabilities\nAuth, workflows, sync,\nexports, review, notifications"];
 
-  Intern -> SALIGAN [label="tracks DTR, notes, reports"];
-  Supervisor -> SALIGAN [label="reviews submissions"];
-  Coordinator -> SALIGAN [label="monitors completion"];
-  Admin -> SALIGAN [label="configures org/templates"];
-  SALIGAN -> SMTP [label="optional email"];
-  SALIGAN -> Calendar [label="exports .ics"];
+  Developer -> SALIGAN [label="runs, tests, extends"];
+  SALIGAN -> Postgres [label="migration / future data"];
+  FutureUser -> SALIGAN [style=dashed, label="future use"];
+  SALIGAN -> Planned [style=dashed, label="future implementation"];
 }

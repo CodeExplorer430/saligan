@@ -1,6 +1,6 @@
 Project saligan {
   database_type: 'PostgreSQL'
-  Note: 'Initial ERD seed for SALIGAN'
+  Note: 'Sprint 0B Drizzle schema baseline for SALIGAN'
 }
 
 Table users {
@@ -27,6 +27,9 @@ Table memberships {
   user_id uuid [not null, ref: > users.id]
   role varchar [not null, note: 'intern, supervisor, coordinator, admin']
   created_at timestamptz [not null]
+  indexes {
+    (organization_id, user_id, role) [unique, name: 'memberships_organization_user_role_unique']
+  }
 }
 
 Table internship_plans {

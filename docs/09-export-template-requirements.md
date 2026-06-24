@@ -1,5 +1,7 @@
 # 09 — Export Template Requirements
 
+> Status: planned requirements. Sprint 0B contains an empty exports API module but no export engine, routes, templates, or file-storage adapter.
+
 ## Purpose
 
 SALIGAN must produce submission-ready exports while remaining configurable for school and company variations.

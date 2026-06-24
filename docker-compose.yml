@@ -4,15 +4,15 @@ services:
     container_name: saligan-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: saligan
-      POSTGRES_USER: saligan
-      POSTGRES_PASSWORD: saligan_dev_password
+      POSTGRES_DB: ${POSTGRES_DB:-saligan}
+      POSTGRES_USER: ${POSTGRES_USER:-saligan}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-saligan_dev_password}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_HOST_PORT:-5433}:5432"
     volumes:
-      - saligan_postgres_data:/var/lib/postgresql/data
+      - saligan_postgres_data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U saligan -d saligan"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-saligan} -d ${POSTGRES_DB:-saligan}"]
       interval: 10s
       timeout: 5s
       retries: 5

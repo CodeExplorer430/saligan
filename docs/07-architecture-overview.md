@@ -2,91 +2,87 @@
 
 ## Summary
 
-SALIGAN uses a TypeScript-first modular monolith: React/Vite PWA, IndexedDB/Dexie offline storage, NestJS/Fastify API, PostgreSQL canonical database, Drizzle ORM, OpenAPI 3.1, and Docker Compose for self-hosting.
+SALIGAN is a TypeScript modular monolith with an offline-capable React/Vite client, NestJS/Fastify API, shared contracts, Drizzle database boundary, PostgreSQL, and Docker Compose infrastructure.
 
-## Context
-
-The platform must support interns who may record DTR entries on mobile devices while internet connectivity is unstable. The PWA stores local drafts and syncs them when the backend is reachable.
-
-## High-level architecture
+## Current Sprint 0B Architecture State
 
 ```text
-Intern / Supervisor / Coordinator
-        |
-        v
-React + Vite PWA
-        |
-        | offline drafts
-        v
-IndexedDB + Sync Queue
-        |
-        | HTTPS REST/OpenAPI
-        v
-NestJS/Fastify API
-        |
-        v
-PostgreSQL
-        |
-        v
-Filesystem storage / future S3-compatible storage
+apps/web
+  React/Vite shell
+  TanStack Router + Query
+  Tailwind CSS
+  PWA/Workbox
+  IndexedDB/Dexie placeholder stores
+
+apps/api
+  NestJS/Fastify
+  GET /api/v1/health
+  Swagger at /api/docs
+  placeholder domain modules
+
+packages
+  shared       constants and statuses
+  validation   Zod input schemas
+  database     Drizzle schema and migration
+  ui           placeholder export boundary
+  config       tooling guidance
+
+Docker Compose
+  PostgreSQL 18
+  optional Mailpit
 ```
 
-## Main modules
+Only health is an implemented API route. Users, internships, schedules, time logs, reports, and exports are empty module boundaries. Authentication, authorization, business services, exports, attachments, notifications, and synchronization are not implemented.
 
-| Module | Responsibility |
+## Current Data Flow
+
+1. Web shell renders dashboard placeholders and connectivity status.
+2. Dexie defines local placeholder tables for time logs, reports, and sync operations.
+3. API exposes health and runtime Swagger.
+4. Drizzle owns schema definitions and generated migration.
+5. PostgreSQL stores canonical future records after migrations are applied.
+
+No business data currently flows between web, API, and database.
+
+## Planned Offline-First Direction
+
+1. User changes are validated and stored locally first.
+2. Sync queue records pending operations.
+3. API validates session, object authorization, version, and domain rules.
+4. PostgreSQL becomes canonical server state.
+5. Conflicts return to client for explicit review.
+
+This is planned architecture, not current behavior.
+
+## Package Boundaries
+
+| Workspace | Responsibility |
 |---|---|
-| Identity | Users, sessions, password hashing, roles |
-| Organization | Organizations, departments, memberships |
-| Internship | Internship plans, supervisors, target hours |
-| Schedule | Workday presets, shifts, breaks, holidays |
-| Timekeeping | Time entries, time segments, correction reasons |
-| Computation | Rendered, remaining, overtime, undertime calculations |
-| Reports | Daily notes, weekly/monthly report entries |
-| Attachments | Documentation images and evidence metadata |
-| Reviews | Submission, approval, rejection, correction requests |
-| Exports | PDF, DOCX, XLSX, CSV, ICS generation |
-| Sync | Offline mutation queue, conflict detection, merge review |
-| Audit | Security and workflow events |
+| `apps/web` | Browser UI, PWA shell, local persistence, future sync UX |
+| `apps/api` | HTTP transport, future authorization, application orchestration |
+| `packages/shared` | Stable cross-workspace constants and future domain contracts |
+| `packages/validation` | Zod schemas for trust-boundary inputs |
+| `packages/database` | Drizzle schema, client factory, and migrations |
+| `packages/ui` | Future shared accessible UI components |
+| `packages/config` | Shared tooling guidance |
 
-## Offline-first strategy
+## Security Boundaries
 
-1. User actions create local mutations first.
-2. Local data is saved in IndexedDB.
-3. UI shows pending sync state.
-4. Sync queue submits operations when online.
-5. Server validates ownership, version, and domain rules.
-6. Conflicts are returned to the client for user review.
-7. Confirmed server state updates the local cache.
+- Browser is never trusted for authorization.
+- Current health route is public and contains no sensitive data.
+- Authentication/session architecture requires an accepted ADR before implementation.
+- Every future user-controlled object ID requires server-side object authorization.
+- Offline data, exports, attachments, logs, and errors must follow privacy rules.
 
-## Security boundaries
+## Planned Capabilities
 
-- The browser cannot be trusted for authorization decisions.
-- Every server request must verify session and object-level access.
-- Interns can only access their own records by default.
-- Supervisors can only access assigned interns.
-- Coordinators/admins operate within organization scope.
-- Audit logs should capture critical changes.
+- domain time calculations;
+- app-owned authentication and secure sessions;
+- internship, schedule, time-log, report, review, and sync services;
+- export and attachment adapters;
+- audit events and notifications;
+- API/web containers and production proxy configuration.
 
-## Export architecture
+## Deployment State
 
-Exports should be generated server-side to ensure consistent formatting, verified data, and traceable export events.
-
-| Export | Format |
-|---|---|
-| DTR | PDF, XLSX, CSV |
-| Weekly report | DOCX, PDF |
-| Monthly summary | PDF, XLSX |
-| Calendar reminders | ICS |
-| Raw data backup | JSON/CSV |
-
-## Deployment model
-
-MVP deployment uses Docker Compose:
-
-- web PWA;
-- API;
-- PostgreSQL;
-- optional local email testing;
-- mounted storage volume for exports/attachments.
-
-Production deployment can place a reverse proxy such as Caddy, Nginx, or Traefik in front of the web and API services.
+Compose currently runs PostgreSQL and optional Mailpit only. PostgreSQL maps host port `5433` to container port `5432` and mounts its named volume at `/var/lib/postgresql` for PostgreSQL 18 compatibility. Web and API run through pnpm during development.

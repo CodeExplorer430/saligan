@@ -25,6 +25,7 @@ Major behavior is incomplete while docs are stale.
 - Use normative MUST/MUST NOT language for enforceable policy.
 - Use exact paths, commands, requirement IDs, and version constraints.
 - Distinguish current behavior, planned behavior, and examples.
+- Label placeholder modules, seed schemas, and product diagrams as planned when no executable behavior exists.
 - Avoid claims not verified in repository.
 - Keep examples synthetic and free of secrets or personal data.
 - Use accessible headings, concise paragraphs, and descriptive links.
@@ -32,6 +33,8 @@ Major behavior is incomplete while docs are stale.
 ## Diagrams and ADRs
 
 Update diagrams when changed relationships cannot be understood from current diagrams. Create ADRs only for durable decisions meeting documented triggers. Never rewrite accepted ADR history; supersede it.
+
+Architecture diagrams MUST distinguish implemented Sprint architecture from future product flows. Regenerate tracked renderings when source tools are available; otherwise record source-only updates in Sprint notes.
 
 ## Review Checklist
 

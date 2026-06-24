@@ -1,5 +1,5 @@
 digraph ERD {
-  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Initial ERD"];
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Sprint 0B Drizzle Schema"];
   node [shape=record, style="rounded,filled", fillcolor="#F8F8F8", color="#333333", fontname="Arial"];
   edge [fontname="Arial", color="#555555"];
 

@@ -19,6 +19,8 @@ release/<version>
 
 If no issue exists for permitted maintenance, omit issue number.
 
+Example maintenance branch: `chore/sprint-0b-bootstrap`.
+
 ## Rules
 
 - Keep one coherent purpose per branch.

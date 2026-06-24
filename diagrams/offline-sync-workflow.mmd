@@ -1,16 +1,15 @@
 flowchart TD
-  A[Intern opens SALIGAN PWA] --> B{Online?}
-  B -- Yes --> C[Load latest server records]
-  B -- No --> D[Load local IndexedDB records]
-  C --> E[Create or update DTR entry]
+  A["Planned: intern opens SALIGAN PWA"] --> B{"Online?"}
+  B -- "Yes" --> C["Load latest authorized server records"]
+  B -- "No" --> D["Load local IndexedDB records"]
+  C --> E["Create or update DTR draft"]
   D --> E
-  E --> F[Write notes / attach evidence]
-  F --> G[Save local draft]
-  G --> H{Ready to sync?}
-  H -- No --> I[Keep pending state]
-  H -- Yes --> J[Submit sync operation]
-  J --> K{Server validation passes?}
-  K -- Yes --> L[Update canonical record]
-  K -- No conflict --> M[Show validation errors]
-  K -- Conflict --> N[Require merge/correction]
-  L --> O[Generate DTR or report export]
+  E --> F["Save local draft"]
+  F --> G{"Ready to sync?"}
+  G -- "No" --> H["Keep pending state"]
+  G -- "Yes" --> I["Submit queued operation"]
+  I --> J{"Server validation and authorization pass?"}
+  J -- "Yes" --> K["Update canonical PostgreSQL record"]
+  J -- "Validation error" --> L["Show safe validation errors"]
+  J -- "Conflict" --> M["Require explicit conflict review"]
+  K --> N["Planned export/review workflow"]

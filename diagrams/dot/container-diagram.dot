@@ -1,32 +1,51 @@
 digraph Containers {
-  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Container Diagram"];
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Sprint 0B Container and Workspace Diagram"];
   node [shape=box, style="rounded,filled", fillcolor="#F8F8F8", color="#333333", fontname="Arial"];
   edge [fontname="Arial", color="#555555"];
 
   subgraph cluster_client {
-    label="Client Device";
+    label="Current browser application";
     color="#CCCCCC";
-    WebPWA [fillcolor="#E8F1FF", label="Web PWA\nReact + Vite"];
-    IndexedDB [fillcolor="#E8F1FF", label="IndexedDB\nDexie local drafts"];
-    SyncQueue [fillcolor="#E8F1FF", label="Sync Queue\nPending offline operations"];
+    Web [fillcolor="#E8F1FF", label="apps/web\nReact + Vite + Tailwind\nTanStack Router/Query\nPWA + Dexie placeholders"];
   }
 
   subgraph cluster_server {
-    label="Self-hosted Server";
+    label="Current API and data";
     color="#CCCCCC";
-    API [fillcolor="#FFF4D6", label="API\nNestJS + Fastify + OpenAPI"];
-    Domain [fillcolor="#FFF4D6", label="Domain Logic\nTime computation + authorization"];
-    Exporters [fillcolor="#FFF4D6", label="Exporters\nPDF/DOCX/XLSX/CSV/ICS"];
-    DB [shape=cylinder, fillcolor="#E8FFE8", label="PostgreSQL\nCanonical records"];
-    Storage [shape=folder, fillcolor="#E8FFE8", label="File Storage\nExports + attachments"];
+    API [fillcolor="#FFF4D6", label="apps/api\nNestJS + Fastify\nGET /api/v1/health\nSwagger"];
+    Database [fillcolor="#E8FFE8", label="packages/database\nDrizzle schema + migration"];
+    DB [shape=cylinder, fillcolor="#E8FFE8", label="PostgreSQL 18\nHost 5433 → container 5432"];
   }
 
-  WebPWA -> IndexedDB [label="read/write local drafts"];
-  IndexedDB -> SyncQueue [label="queue changes"];
-  WebPWA -> API [label="HTTPS REST"];
-  SyncQueue -> API [label="sync operations"];
-  API -> Domain [label="validate rules"];
-  API -> Exporters [label="generate files"];
-  API -> DB [label="read/write"];
-  API -> Storage [label="store files"];
+  subgraph cluster_packages {
+    label="Current shared packages";
+    color="#CCCCCC";
+    Shared [label="packages/shared\nConstants + statuses"];
+    Validation [label="packages/validation\nZod schemas"];
+    UI [label="packages/ui\nPlaceholder boundary"];
+    Config [label="packages/config\nTooling guidance"];
+  }
+
+  subgraph cluster_planned {
+    label="Planned, not implemented";
+    color="#999999";
+    style=dashed;
+    Auth [style="rounded,dashed", label="Auth + authorization"];
+    Sync [style="rounded,dashed", label="Sync engine"];
+    Exports [style="rounded,dashed", label="Exports + attachments"];
+    Reviews [style="rounded,dashed", label="Review workflows"];
+  }
+
+  Web -> Shared;
+  Web -> Validation;
+  Web -> UI;
+  API -> Shared;
+  API -> Validation;
+  Database -> DB [label="migrate / future query"];
+  Config -> Web;
+  Config -> API;
+  Web -> Sync [style=dashed, label="future"];
+  API -> Auth [style=dashed, label="future"];
+  API -> Exports [style=dashed, label="future"];
+  API -> Reviews [style=dashed, label="future"];
 }

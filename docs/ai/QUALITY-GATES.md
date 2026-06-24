@@ -10,14 +10,17 @@ Baseline:
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm format:check
+pnpm docs:check
 pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm audit --prod
 docker compose config
 ```
 
-Also run formatter/docs checks, targeted tests, API health, web smoke, and migration checks when available. Use repository scripts as authoritative.
+Also run targeted tests, API health, web smoke, and migration checks when available. Database changes MUST run `pnpm db:generate` and validate `pnpm db:migrate` against clean PostgreSQL. Use repository scripts as authoritative.
 
 ## CI Gates
 
@@ -32,7 +35,7 @@ Required CI SHOULD include:
 - Docker Compose and image validation;
 - required branch protections.
 
-Guarded bootstrap jobs MAY skip unavailable app checks only when they emit explicit notices. Once prerequisites exist, remove guards that hide required checks.
+Current CI runs frozen install, formatting, documentation, lint, typecheck, tests, and build. Security workflow runs dependency review, production audit, and Gitleaks. Docker workflow validates and health-checks PostgreSQL.
 
 ## Docker Gates
 
@@ -44,6 +47,8 @@ Run `docker compose config` for every Compose change. Infrastructure, API, datab
 4. run migration checks;
 5. run API/web smoke checks;
 6. shut down cleanly without deleting data unless requested.
+
+Current Compose contains PostgreSQL and Mailpit only. API/web smoke checks run through local pnpm processes until their containers exist.
 
 ## Security Gates
 
@@ -80,3 +85,5 @@ Before merge:
 - security and privacy concerns are resolved or explicitly accepted by maintainer;
 - rollback/recovery is credible;
 - no unrelated or unexplained diff remains.
+
+Local success does not satisfy required remote GitHub Actions. Merge claims require observed remote results after a remote and pull request exist.

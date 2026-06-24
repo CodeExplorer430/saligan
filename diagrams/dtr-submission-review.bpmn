@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_SALIGAN" targetNamespace="https://saligan.local/bpmn">
-  <process id="Process_DTR_Submission" name="SALIGAN DTR Submission and Review" isExecutable="false">
+  <process id="Process_DTR_Submission" name="SALIGAN Planned DTR Submission and Review — Not Implemented in Sprint 0B" isExecutable="false">
     <startEvent id="StartEvent_InternLogs" name="Intern logs DTR" />
     <task id="Task_SaveDraft" name="Save draft locally" />
     <exclusiveGateway id="Gateway_Online" name="Online?" />

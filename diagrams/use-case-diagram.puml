@@ -11,6 +11,7 @@ actor Supervisor
 actor "Academic Coordinator" as Coordinator
 actor "Organization Admin" as Admin
 rectangle "SALIGAN" {
+  note "Planned product use cases.\nOnly Sprint 0B shell and health endpoint exist." as Status
   usecase "Configure Internship Plan" as UC1
   usecase "Configure Schedule" as UC2
   usecase "Log DTR Entry" as UC3

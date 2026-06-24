@@ -16,7 +16,7 @@ Controls SHOULD align with OWASP ASVS and OWASP API Security Top 10.
 
 ## Authentication and Sessions
 
-When implemented:
+Authentication and sessions are not implemented in Sprint 0B. An accepted ADR is required before user endpoints or credentials are added. When implemented:
 
 - hash passwords with Argon2id using reviewed parameters;
 - use generic authentication errors;
@@ -73,6 +73,7 @@ Logs MUST be structured, access-controlled, and free of credentials, tokens, pas
 - Never use production credentials in development, tests, docs, or CI.
 - Pin and review dependencies; verify maintenance and license.
 - Assess audit findings before upgrades.
+- Run `pnpm audit --prod`; current security workflow blocks high-severity findings.
 
 ## Security Escalation
 

@@ -2,11 +2,9 @@
 
 ## Purpose
 
-This guide prepares the SALIGAN repository for the first implementation sprint.
+Prepare SALIGAN for local development after Sprint 0B.
 
 ## Prerequisites
-
-Recommended local tools:
 
 ```text
 Node.js 24 LTS
@@ -14,100 +12,99 @@ pnpm 11
 Docker 29+
 Docker Compose 2.40+
 Git
-OpenSSL
-jq
 ```
 
-## Create repository
+Repository is initialized on `main`. Contributors MUST create short-lived branches and follow `AGENTS.md`.
 
-```bash
-mkdir saligan
-cd saligan
-git init
-```
-
-Copy this planning package into the repository root, then commit the baseline:
-
-```bash
-git add README.md docs specs diagrams adrs backlog package.json pnpm-workspace.yaml docker-compose.yml .env.example .editorconfig .gitignore
-git commit -m "chore: establish SALIGAN planning baseline"
-```
-
-## Install package manager
+## Install
 
 ```bash
 corepack enable
 corepack prepare pnpm@11.0.0 --activate
-pnpm --version
+pnpm install --frozen-lockfile
 ```
 
-## Planned scaffold commands
-
-```bash
-mkdir -p apps/web-pwa apps/api packages/domain packages/ui packages/config packages/exporters packages/sync docker
-pnpm init
-```
-
-After scaffolding, the root should contain:
+## Workspace
 
 ```text
-apps/web-pwa
+apps/web
 apps/api
-packages/domain
-packages/ui
 packages/config
-packages/exporters
-packages/sync
+packages/database
+packages/shared
+packages/ui
+packages/validation
 docs
 diagrams
 specs
 adrs
 backlog
-docker
 ```
 
-## Environment setup
-
-Copy `.env.example` to `.env`:
+## Environment
 
 ```bash
 cp .env.example .env
-```
-
-Start local infrastructure:
-
-```bash
 docker compose up -d postgres mailpit
+docker compose ps
+pnpm db:migrate
 ```
 
-## First development milestone
+PostgreSQL binds to host port `5433` by default. Container-to-container connections use `5432`. Override host binding with `POSTGRES_HOST_PORT`.
 
-Before building UI screens, implement and test the domain package:
+Host port `5433` avoids collision with local PostgreSQL installations commonly using `5432`.
 
-1. schedule presets;
-2. time segment model;
-3. regular/overtime/undertime computation;
-4. remaining hours computation;
-5. validation rules.
-
-## Initial quality gates
-
-The final repository should support these commands:
+Routine shutdown MUST preserve volumes:
 
 ```bash
+docker compose down
+```
+
+Do not add `-v` unless data deletion is explicitly intended and approved.
+
+## Development
+
+```bash
+pnpm dev
+```
+
+Endpoints:
+
+- web: `http://localhost:5173`;
+- health: `http://localhost:3000/api/v1/health`;
+- Swagger: `http://localhost:3000/api/docs`;
+- Mailpit: `http://localhost:8025`.
+
+## Quality Gates
+
+```bash
+pnpm install --frozen-lockfile
+pnpm format:check
+pnpm docs:check
 pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+docker compose config
 ```
 
-## First implementation order
+Database changes also require:
 
-1. Domain model and computation tests.
-2. Database schema and migrations.
-3. API endpoints for internship plan and time entries.
-4. PWA local data model with IndexedDB.
-5. DTR logging screen.
-6. DTR export prototype.
-7. Weekly report prototype.
-8. Offline sync queue.
+```bash
+pnpm db:generate
+docker compose up -d --wait postgres
+docker compose ps postgres
+pnpm db:migrate
+docker compose down
+```
+
+## First Feature Order
+
+Future feature work MUST trace to approved requirements:
+
+1. domain time computation tests;
+2. internship and schedule application behavior;
+3. API contracts and authorization architecture;
+4. offline DTR workflow;
+5. report and export workflows;
+6. synchronization and conflict handling.

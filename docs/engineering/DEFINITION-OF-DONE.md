@@ -7,6 +7,7 @@ A change is complete only when:
 - implementation is scoped and reviewed;
 - tests are added/updated and map to behavior;
 - applicable lint, typecheck, test, build, Docker, smoke, health, and migration gates pass;
+- frozen install, formatting, documentation checks, and production audit pass when applicable;
 - failed or unavailable gates are explicitly reported and accepted before merge;
 - security, privacy, dependency, license, and data risks are addressed;
 - docs, OpenAPI, schema notes, ADRs, and screenshots are current where applicable;
@@ -16,3 +17,5 @@ A change is complete only when:
 - required reviewers approve and CI passes.
 
 An agent MUST NOT use “done,” “complete,” or “ready” before these conditions are met.
+
+Local gates may establish branch readiness, but they do not establish remote CI success.

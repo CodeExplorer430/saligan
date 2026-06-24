@@ -11,6 +11,8 @@ Every behavior change MUST cite one or more:
 
 No source means no feature implementation. Clarify or update spec first.
 
+Sprint 0 scaffold and governance are explicit maintainer instructions. Future product work MUST cite SRS IDs or accepted issues/ADRs.
+
 ## Workflow
 
 1. Identify requirement and current behavior.
@@ -72,3 +74,5 @@ Security-sensitive criteria MUST include negative cases. Offline criteria MUST i
 ## Change Control
 
 If implementation exposes ambiguity or contradiction, stop feature work and escalate. Do not silently reinterpret approved criteria.
+
+`specs/openapi-seed.yaml` currently describes implemented health behavior only. Add feature paths when corresponding controllers and tests exist, unless a separate proposal specification is explicitly created.

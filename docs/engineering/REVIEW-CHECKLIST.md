@@ -23,8 +23,10 @@
 
 ## Tests and Operations
 
+- Frozen install, formatting, and documentation checks pass.
 - Tests map to changed behavior and regressions.
 - Required local/CI/Docker/migration/smoke gates ran.
+- Production dependency audit findings are resolved or documented.
 - Failed or skipped gates are explicit.
 - Deployment, backup, recovery, and rollback are credible.
 
@@ -37,3 +39,5 @@
 ## Decision
 
 Approve only when material findings are resolved. Use blocking review for security, data loss, failed mandatory gates, missing traceability, or stale contracts.
+
+Do not equate local checks with remote GitHub Actions. Required remote checks must be observed before merge.

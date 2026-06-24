@@ -34,6 +34,16 @@ Detailed responsibilities live in `AGENT-ROLES.md`.
 - Agent MUST NOT overwrite or reformat another agent's changes.
 - Scope expansion requires Orchestrator or maintainer approval.
 
+Recommended Sprint workspace ownership:
+
+- Frontend: `apps/web`;
+- Backend: `apps/api`;
+- Database: `packages/database`;
+- Contracts/validation: `packages/shared`, `packages/validation`;
+- UI system: `packages/ui`, `DESIGN.md`;
+- Repository tooling: root configs and `.github/workflows`;
+- Documentation: assigned `docs/`, `specs/`, and `diagrams/` paths.
+
 ## Handoff Format
 
 Use `AGENT-HANDOFF-PROTOCOL.md`. Minimum handoff:

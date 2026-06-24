@@ -13,6 +13,7 @@
 
 ## React
 
+- Web code lives in `apps/web`.
 - Use function components and hooks.
 - Keep rendering pure; isolate side effects.
 - Treat server state, local UI state, and offline persisted state separately.
@@ -23,6 +24,7 @@
 
 ## NestJS
 
+- API code lives in `apps/api`.
 - Keep controllers thin: transport, validation, response mapping.
 - Put application behavior in services/use cases and domain rules in testable modules.
 - Apply authentication, authorization, and object-scope checks consistently.
@@ -32,6 +34,7 @@
 
 ## Database
 
+- Drizzle schema and migrations live in `packages/database`.
 - Use PostgreSQL constraints for durable invariants.
 - Parameterize all queries.
 - Scope sensitive queries by organization/owner/assignment.
@@ -77,3 +80,10 @@ Generated files, lockfiles, migrations, snapshots, schema dumps, compiled artifa
 ## Style and Tooling
 
 Use repository ESLint, Prettier, TypeScript, and test configuration. Do not add local style exceptions to bypass valid findings. Formatting-only changes MUST not obscure behavioral diffs.
+
+Current shared boundaries:
+
+- constants/contracts: `packages/shared`;
+- external input schemas: `packages/validation`;
+- future reusable components: `packages/ui`;
+- tooling guidance: `packages/config`.

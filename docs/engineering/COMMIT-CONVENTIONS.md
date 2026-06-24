@@ -12,6 +12,7 @@ Examples:
 
 ```text
 docs(ai): define agent handoff protocol
+docs(architecture): reconcile Sprint 0 baseline
 ci(security): add dependency review gate
 fix(timekeeping): reject overlapping time segments
 ```

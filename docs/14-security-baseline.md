@@ -16,6 +16,8 @@ This document defines the minimum security baseline for the SALIGAN MVP.
 
 ## Authentication
 
+- Authentication is not implemented in Sprint 0B.
+- An accepted ADR is required before user or credential endpoints are added.
 - MVP uses app-owned email/password authentication.
 - Passwords must never be stored in plaintext.
 - Use Argon2id or another approved slow password hashing algorithm.

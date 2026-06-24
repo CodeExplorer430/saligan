@@ -2,7 +2,9 @@
 
 ## Purpose
 
-This document explains the initial logical data model for SALIGAN. The DBML source is in `diagrams/erd.dbml`, and rendered Graphviz ERD files are in `diagrams/rendered/`.
+This document explains the Sprint 0B database baseline for SALIGAN. Drizzle schema is authoritative in `packages/database/src/schema/`; generated migration lives under `packages/database/drizzle/`. DBML and rendered Graphviz ERD files provide documentation views.
+
+The 12 tables are migrated and locally verified. Application services, authentication, authorization, and business behavior using these tables remain unimplemented.
 
 ## Core entities
 

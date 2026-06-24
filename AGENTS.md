@@ -13,7 +13,7 @@ SALIGAN means Student Attendance, Logbook, Internship Goals, Accomplishments, an
 Baseline architecture:
 
 - TypeScript strict-mode pnpm monorepo with Turborepo.
-- React 19, Vite, TanStack Router/Query, Tailwind CSS, shadcn/ui, IndexedDB/Dexie.
+- React 19, Vite, TanStack Router/Query, Tailwind CSS, IndexedDB/Dexie, and PWA/Workbox.
 - NestJS with Fastify, REST, OpenAPI 3.1, Zod.
 - PostgreSQL, Drizzle ORM, reversible or documented migrations.
 - Docker Compose for local and self-hosted deployment.
@@ -166,10 +166,13 @@ Before completion, run or report why each applicable command could not run:
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm format:check
+pnpm docs:check
 pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm audit --prod
 docker compose config
 ```
 
