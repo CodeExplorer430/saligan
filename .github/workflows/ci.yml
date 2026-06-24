@@ -18,7 +18,7 @@ jobs:
     name: Repository checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validate package metadata
         run: node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))"
@@ -41,7 +41,7 @@ jobs:
     name: pnpm quality gates
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Detect bootstrap readiness
         id: ready
