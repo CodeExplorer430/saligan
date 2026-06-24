@@ -1,0 +1,31 @@
+name: Documentation
+description: Report missing, stale, unclear, or incorrect documentation
+title: "docs: "
+labels:
+  - documentation
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Document or location
+      placeholder: docs/path.md, heading, URL, or command
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: Problem
+      description: What is wrong, missing, stale, or unclear?
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Expected correction
+      description: State verified behavior or source that documentation should match.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context

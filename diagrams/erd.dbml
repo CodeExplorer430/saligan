@@ -1,0 +1,143 @@
+Project saligan {
+  database_type: 'PostgreSQL'
+  Note: 'Initial ERD seed for SALIGAN'
+}
+
+Table users {
+  id uuid [pk]
+  email varchar [unique, not null]
+  password_hash text [not null]
+  display_name varchar [not null]
+  status varchar [not null, note: 'active, disabled']
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
+
+Table organizations {
+  id uuid [pk]
+  name varchar [not null]
+  type varchar [not null, note: 'school, company, department, personal']
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
+
+Table memberships {
+  id uuid [pk]
+  organization_id uuid [not null, ref: > organizations.id]
+  user_id uuid [not null, ref: > users.id]
+  role varchar [not null, note: 'intern, supervisor, coordinator, admin']
+  created_at timestamptz [not null]
+}
+
+Table internship_plans {
+  id uuid [pk]
+  intern_user_id uuid [not null, ref: > users.id]
+  organization_id uuid [not null, ref: > organizations.id]
+  supervisor_user_id uuid [ref: > users.id]
+  role_title varchar [not null]
+  company_name varchar [not null]
+  department_name varchar
+  target_minutes int [not null]
+  timezone varchar [not null]
+  start_date date [not null]
+  expected_end_date date
+  status varchar [not null, note: 'draft, active, paused, completed, archived']
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
+
+Table schedule_rules {
+  id uuid [pk]
+  internship_plan_id uuid [not null, ref: > internship_plans.id]
+  day_of_week int [not null, note: '1-7 ISO weekday']
+  shift_start time [not null]
+  shift_end time [not null]
+  break_start time
+  break_end time
+  overtime_allowed boolean [not null, default: false]
+  is_workday boolean [not null, default: true]
+}
+
+Table time_entries {
+  id uuid [pk]
+  internship_plan_id uuid [not null, ref: > internship_plans.id]
+  work_date date [not null]
+  status varchar [not null]
+  review_state varchar [not null]
+  computed_regular_minutes int [not null, default: 0]
+  computed_overtime_minutes int [not null, default: 0]
+  computed_undertime_minutes int [not null, default: 0]
+  correction_reason text
+  version int [not null, default: 1]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
+
+Table time_segments {
+  id uuid [pk]
+  time_entry_id uuid [not null, ref: > time_entries.id]
+  segment_type varchar [not null, note: 'work, break']
+  start_time timestamptz [not null]
+  end_time timestamptz
+  source varchar [not null, note: 'manual, clock, sync_import, correction']
+  created_at timestamptz [not null]
+}
+
+Table report_entries {
+  id uuid [pk]
+  internship_plan_id uuid [not null, ref: > internship_plans.id]
+  period_type varchar [not null]
+  period_start date [not null]
+  period_end date [not null]
+  summary text
+  body text
+  status varchar [not null]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+}
+
+Table attachments {
+  id uuid [pk]
+  owner_user_id uuid [not null, ref: > users.id]
+  entity_type varchar [not null]
+  entity_id uuid [not null]
+  filename varchar [not null]
+  content_type varchar [not null]
+  storage_path text [not null]
+  size_bytes int [not null]
+  created_at timestamptz [not null]
+}
+
+Table review_decisions {
+  id uuid [pk]
+  reviewer_user_id uuid [not null, ref: > users.id]
+  entity_type varchar [not null]
+  entity_id uuid [not null]
+  decision varchar [not null, note: 'approved, rejected, correction_requested']
+  comment text
+  created_at timestamptz [not null]
+}
+
+Table sync_operations {
+  id uuid [pk]
+  user_id uuid [not null, ref: > users.id]
+  device_id varchar [not null]
+  operation_id varchar [not null]
+  entity_type varchar [not null]
+  action varchar [not null]
+  status varchar [not null]
+  payload jsonb [not null]
+  created_at timestamptz [not null]
+  processed_at timestamptz
+}
+
+Table audit_events {
+  id uuid [pk]
+  actor_user_id uuid [ref: > users.id]
+  organization_id uuid [ref: > organizations.id]
+  action varchar [not null]
+  entity_type varchar [not null]
+  entity_id uuid
+  metadata jsonb
+  created_at timestamptz [not null]
+}

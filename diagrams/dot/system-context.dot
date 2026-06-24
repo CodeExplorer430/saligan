@@ -1,0 +1,20 @@
+digraph SystemContext {
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN System Context"];
+  node [shape=box, style="rounded,filled", fillcolor="#F8F8F8", color="#333333", fontname="Arial"];
+  edge [fontname="Arial", color="#555555"];
+
+  Intern [shape=oval, fillcolor="#E8F1FF", label="Student Intern"];
+  Supervisor [shape=oval, fillcolor="#E8F1FF", label="Company Supervisor"];
+  Coordinator [shape=oval, fillcolor="#E8F1FF", label="Academic Coordinator"];
+  Admin [shape=oval, fillcolor="#E8F1FF", label="Organization Admin"];
+  SALIGAN [fillcolor="#FFF4D6", label="SALIGAN\nStudent Attendance, Logbook, Internship Goals,\nAccomplishments, and Notes"];
+  SMTP [fillcolor="#F1F1F1", label="SMTP Server\nNotifications"];
+  Calendar [fillcolor="#F1F1F1", label="Calendar Apps\nICS reminders"];
+
+  Intern -> SALIGAN [label="tracks DTR, notes, reports"];
+  Supervisor -> SALIGAN [label="reviews submissions"];
+  Coordinator -> SALIGAN [label="monitors completion"];
+  Admin -> SALIGAN [label="configures org/templates"];
+  SALIGAN -> SMTP [label="optional email"];
+  SALIGAN -> Calendar [label="exports .ics"];
+}

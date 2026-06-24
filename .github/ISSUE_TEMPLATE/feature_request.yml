@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose behavior backed by a user need
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe user, workflow, and current limitation without prescribing implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: State observable behavior and success criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Requirement or backlog link
+      description: Link SRS ID, backlog item, or explain why specification work is needed.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and risks
+      description: Offline, privacy, authorization, export, accessibility, self-hosting, or compatibility concerns.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

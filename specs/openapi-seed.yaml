@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  title: SALIGAN API
+  version: 0.1.0
+  description: Initial API seed for SALIGAN, a self-hosted offline-first internship records and OJT management PWA.
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Local development
+security:
+  - cookieSession: []
+components:
+  securitySchemes:
+    cookieSession:
+      type: apiKey
+      in: cookie
+      name: session
+  schemas:
+    InternshipPlan:
+      type: object
+      required: [id, internUserId, organizationId, targetMinutes, timezone, status]
+      properties:
+        id: { type: string, format: uuid }
+        internUserId: { type: string, format: uuid }
+        organizationId: { type: string, format: uuid }
+        supervisorUserId: { type: [string, 'null'], format: uuid }
+        roleTitle: { type: string }
+        companyName: { type: string }
+        departmentName: { type: string }
+        targetMinutes: { type: integer, minimum: 1 }
+        timezone: { type: string }
+        startDate: { type: string, format: date }
+        expectedEndDate: { type: [string, 'null'], format: date }
+        status:
+          type: string
+          enum: [draft, active, paused, completed, archived]
+    TimeEntry:
+      type: object
+      required: [id, internshipPlanId, workDate, status, reviewState]
+      properties:
+        id: { type: string, format: uuid }
+        internshipPlanId: { type: string, format: uuid }
+        workDate: { type: string, format: date }
+        status:
+          type: string
+          enum: [draft, present, late, undertime, overtime, absent, rest_day, holiday, fieldwork]
+        reviewState:
+          type: string
+          enum: [draft, submitted, approved, rejected, correction_requested]
+        computedRegularMinutes: { type: integer, minimum: 0 }
+        computedOvertimeMinutes: { type: integer, minimum: 0 }
+        computedUndertimeMinutes: { type: integer, minimum: 0 }
+    TimeSegment:
+      type: object
+      required: [id, timeEntryId, segmentType, startTime]
+      properties:
+        id: { type: string, format: uuid }
+        timeEntryId: { type: string, format: uuid }
+        segmentType:
+          type: string
+          enum: [work, break]
+        startTime: { type: string, format: date-time }
+        endTime: { type: [string, 'null'], format: date-time }
+        source:
+          type: string
+          enum: [manual, clock, sync_import, correction]
+    ReportEntry:
+      type: object
+      required: [id, internshipPlanId, periodType, periodStart, periodEnd, status]
+      properties:
+        id: { type: string, format: uuid }
+        internshipPlanId: { type: string, format: uuid }
+        periodType: { type: string, enum: [daily, weekly, monthly, custom] }
+        periodStart: { type: string, format: date }
+        periodEnd: { type: string, format: date }
+        summary: { type: string }
+        body: { type: string }
+        status: { type: string, enum: [draft, submitted, approved, rejected] }
+    SyncOperation:
+      type: object
+      required: [operationId, entityType, action, payload]
+      properties:
+        operationId: { type: string }
+        entityType: { type: string, enum: [time_entry, report_entry, attachment] }
+        action: { type: string, enum: [create, update, delete] }
+        baseVersion: { type: [integer, 'null'] }
+        payload: { type: object }
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /internship-plans:
+    get:
+      summary: List internship plans visible to the current user
+      responses:
+        '200':
+          description: Internship plans
+    post:
+      summary: Create internship plan
+      responses:
+        '201':
+          description: Created
+  /internship-plans/{planId}/time-entries:
+    get:
+      summary: List time entries for an internship plan
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: from
+          in: query
+          schema: { type: string, format: date }
+        - name: to
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: Time entries
+    post:
+      summary: Create time entry
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '201':
+          description: Created
+  /time-entries/{entryId}/submit:
+    post:
+      summary: Submit a time entry for review
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Submitted
+  /reviews:
+    post:
+      summary: Create review decision
+      responses:
+        '201':
+          description: Review recorded
+  /sync:
+    post:
+      summary: Submit offline sync operations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [deviceId, operations]
+              properties:
+                deviceId: { type: string }
+                operations:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SyncOperation'
+      responses:
+        '200':
+          description: Sync result
+  /exports:
+    post:
+      summary: Generate an export
+      responses:
+        '202':
+          description: Export queued or generated

@@ -1,0 +1,56 @@
+name: Docker
+
+on:
+  pull_request:
+    paths:
+      - "docker-compose.yml"
+      - "docker/**"
+      - "apps/**/Dockerfile"
+      - ".github/workflows/docker.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "docker-compose.yml"
+      - "docker/**"
+      - "apps/**/Dockerfile"
+      - ".github/workflows/docker.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compose:
+    name: Compose validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Compose model
+        run: docker compose config
+
+      - name: Detect application services
+        id: services
+        shell: bash
+        run: |
+          if docker compose config --services | grep -Eq '^(api|web|web-pwa)$'; then
+            echo "value=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Container smoke test deferred until API or web service exists."
+          fi
+
+      - name: Start containerized stack
+        if: steps.services.outputs.value == 'true'
+        run: docker compose up -d --build --wait
+
+      - name: Show service status
+        if: always() && steps.services.outputs.value == 'true'
+        run: docker compose ps
+
+      - name: Stop containerized stack
+        if: always() && steps.services.outputs.value == 'true'
+        run: docker compose down
+
+      # TODO: Add API health, web smoke, migration, and image scanning gates
+      # when application services and health endpoints are implemented.

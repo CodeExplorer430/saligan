@@ -1,0 +1,25 @@
+{
+  "name": "saligan",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Offline-first, self-hostable internship records and OJT management platform for DTR, rendered hours, reports, and supervisor review.",
+  "packageManager": "pnpm@11.0.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "format": "prettier --write .",
+    "docs:check": "markdownlint-cli2 \"**/*.md\""
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "typescript": "latest",
+    "prettier": "latest",
+    "markdownlint-cli2": "latest"
+  }
+}

@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam rectangle {
+  BackgroundColor #F8F8F8
+  BorderColor #333333
+}
+actor Intern
+actor Supervisor
+actor "Academic Coordinator" as Coordinator
+actor "Organization Admin" as Admin
+rectangle "SALIGAN" {
+  usecase "Configure Internship Plan" as UC1
+  usecase "Configure Schedule" as UC2
+  usecase "Log DTR Entry" as UC3
+  usecase "Write Daily Notes" as UC4
+  usecase "Generate Weekly Report" as UC5
+  usecase "Export DTR / Report" as UC6
+  usecase "Submit for Review" as UC7
+  usecase "Approve / Reject / Request Correction" as UC8
+  usecase "Manage Templates" as UC9
+  usecase "Manage Organization" as UC10
+  usecase "Sync Offline Drafts" as UC11
+}
+Intern --> UC1
+Intern --> UC2
+Intern --> UC3
+Intern --> UC4
+Intern --> UC5
+Intern --> UC6
+Intern --> UC7
+Intern --> UC11
+Supervisor --> UC8
+Supervisor --> UC6
+Coordinator --> UC6
+Coordinator --> UC8
+Admin --> UC9
+Admin --> UC10
+UC3 ..> UC11 : offline-first
+UC4 ..> UC11 : offline-first
+@enduml

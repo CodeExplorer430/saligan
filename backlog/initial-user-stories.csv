@@ -1,0 +1,11 @@
+id,epic,title,priority,role,acceptance_criteria
+US-001,Internship Plan,Create internship plan,MVP,Intern,"Plan saves target hours,start date,company,role,supervisor"
+US-002,Schedule,Configure work schedule,MVP,Intern,"Supports presets and custom workdays,shift times,breaks"
+US-003,Timekeeping,Log clock-in and clock-out,MVP,Intern,"Entry records start/end times and computes minutes"
+US-004,Reports,Write daily accomplishments,MVP,Intern,"Daily note saves offline and links to work date"
+US-005,Exports,Export DTR,MVP,Intern,"DTR export includes daily rows,total hours,signature blocks"
+US-006,Offline Sync,Save draft offline,MVP,Intern,"Draft persists in IndexedDB and appears as pending sync"
+US-007,Review,Approve submitted records,Should,Supervisor,"Supervisor can approve,reject,or request correction"
+US-008,Audit,Record review decisions,Should,System,"Audit event stores actor,action,timestamp,entity"
+US-009,Templates,Configure DTR template,Later,Admin,"Admin can version and select export templates"
+US-010,Organizations,Manage departments,Later,Admin,"Admin can create departments and assign supervisors"

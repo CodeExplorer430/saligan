@@ -1,0 +1,41 @@
+name: Security hardening
+description: Propose preventive security improvement; do not disclose active vulnerabilities
+title: "security: "
+labels:
+  - security
+body:
+  - type: markdown
+    attributes:
+      value: Do not submit exploitable vulnerabilities, secrets, or private records here. Use SECURITY.md private reporting instructions when available.
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Disclosure check
+      options:
+        - label: This is preventive hardening, not an undisclosed exploitable vulnerability.
+          required: true
+  - type: textarea
+    id: area
+    attributes:
+      label: Security area
+      description: Authentication, authorization, input, export, attachment, logging, dependency, container, or deployment.
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk and threat scenario
+      description: Use synthetic details and avoid actionable exploit instructions.
+    validations:
+      required: true
+  - type: textarea
+    id: control
+    attributes:
+      label: Proposed control and acceptance criteria
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: Negative tests, scans, or operational checks that should prove the control.

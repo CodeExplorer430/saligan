@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: saligan-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: saligan
+      POSTGRES_USER: saligan
+      POSTGRES_PASSWORD: saligan_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - saligan_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saligan -d saligan"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: saligan-mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  saligan_postgres_data:

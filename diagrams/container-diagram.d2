@@ -1,0 +1,36 @@
+direction: right
+
+Intern: Student Intern
+Supervisor: Company Supervisor
+Coordinator: Academic Coordinator
+Admin: Organization Admin
+
+SALIGAN: {
+  label: "SALIGAN
+Student Attendance, Logbook, Internship Goals, Accomplishments, and Notes"
+  WebPWA: "Web PWA
+React + Vite + IndexedDB"
+  API: "API
+NestJS + Fastify + OpenAPI"
+  Domain: "Domain Package
+Time computation + validation"
+  Sync: "Sync Package
+Offline operation queue"
+  Exporters: "Exporters
+PDF/DOCX/XLSX/CSV/ICS"
+  DB: "PostgreSQL
+Canonical records"
+  Storage: "File Storage
+Exports + attachments"
+}
+
+Intern -> SALIGAN.WebPWA: log DTR, notes, reports
+Supervisor -> SALIGAN.WebPWA: review submissions
+Coordinator -> SALIGAN.WebPWA: monitor progress
+Admin -> SALIGAN.WebPWA: configure org/templates
+SALIGAN.WebPWA -> SALIGAN.Sync: queue offline drafts
+SALIGAN.WebPWA -> SALIGAN.API: REST API
+SALIGAN.API -> SALIGAN.Domain: enforce rules
+SALIGAN.API -> SALIGAN.Exporters: generate files
+SALIGAN.API -> SALIGAN.DB: read/write
+SALIGAN.API -> SALIGAN.Storage: store files

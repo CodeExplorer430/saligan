@@ -1,0 +1,21 @@
+# Default maintainers
+* @chesternothacker @codeexplorer430
+
+# Governance, security, architecture, automation, and dependencies
+/AGENTS.md @chesternothacker @codeexplorer430
+/CLAUDE.md @chesternothacker @codeexplorer430
+/GEMINI.md @chesternothacker @codeexplorer430
+/.cursorrules @chesternothacker @codeexplorer430
+/.windsurfrules @chesternothacker @codeexplorer430
+/.github/ @chesternothacker @codeexplorer430
+/adrs/ @chesternothacker @codeexplorer430
+/docs/ai/ @chesternothacker @codeexplorer430
+/docs/engineering/ @chesternothacker @codeexplorer430
+/docs/governance/ @chesternothacker @codeexplorer430
+/docs/14-security-baseline.md @chesternothacker @codeexplorer430
+/SECURITY.md @chesternothacker @codeexplorer430
+/specs/ @chesternothacker @codeexplorer430
+/package.json @chesternothacker @codeexplorer430
+/pnpm-lock.yaml @chesternothacker @codeexplorer430
+/pnpm-workspace.yaml @chesternothacker @codeexplorer430
+/docker-compose.yml @chesternothacker @codeexplorer430

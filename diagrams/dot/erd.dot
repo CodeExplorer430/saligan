@@ -1,0 +1,33 @@
+digraph ERD {
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Initial ERD"];
+  node [shape=record, style="rounded,filled", fillcolor="#F8F8F8", color="#333333", fontname="Arial"];
+  edge [fontname="Arial", color="#555555"];
+
+  users [label="{users|id PK\lemail\lpassword_hash\ldisplay_name\lstatus\l}"];
+  organizations [label="{organizations|id PK\lname\ltype\l}"];
+  memberships [label="{memberships|id PK\lorganization_id FK\luser_id FK\lrole\l}"];
+  plans [label="{internship_plans|id PK\lintern_user_id FK\lorganization_id FK\lsupervisor_user_id FK\ltarget_minutes\lstatus\l}"];
+  schedules [label="{schedule_rules|id PK\linternship_plan_id FK\lday_of_week\lshift_start/end\lbreak_start/end\l}"];
+  entries [label="{time_entries|id PK\linternship_plan_id FK\lwork_date\lstatus\lreview_state\lcomputed_minutes\l}"];
+  segments [label="{time_segments|id PK\ltime_entry_id FK\lsegment_type\lstart_time\lend_time\l}"];
+  reports [label="{report_entries|id PK\linternship_plan_id FK\lperiod_type\lperiod_start/end\lstatus\l}"];
+  attachments [label="{attachments|id PK\lowner_user_id FK\lentity_type\lentity_id\lstorage_path\l}"];
+  reviews [label="{review_decisions|id PK\lreviewer_user_id FK\lentity_type\lentity_id\ldecision\l}"];
+  sync [label="{sync_operations|id PK\luser_id FK\ldevice_id\loperation_id\lstatus\l}"];
+  audit [label="{audit_events|id PK\lactor_user_id FK\lorganization_id FK\laction\lentity_type\l}"];
+
+  users -> memberships;
+  organizations -> memberships;
+  users -> plans [label="intern"];
+  users -> plans [label="supervisor"];
+  organizations -> plans;
+  plans -> schedules;
+  plans -> entries;
+  entries -> segments;
+  plans -> reports;
+  users -> attachments;
+  users -> reviews;
+  users -> sync;
+  users -> audit;
+  organizations -> audit;
+}

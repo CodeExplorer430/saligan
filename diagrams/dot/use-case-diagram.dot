@@ -1,0 +1,40 @@
+digraph UseCases {
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Use Case Diagram"];
+  node [fontname="Arial"];
+  edge [fontname="Arial", color="#555555"];
+
+  Intern [shape=oval, fillcolor="#E8F1FF", style=filled];
+  Supervisor [shape=oval, fillcolor="#E8F1FF", style=filled];
+  Coordinator [shape=oval, label="Academic\nCoordinator", fillcolor="#E8F1FF", style=filled];
+  Admin [shape=oval, label="Organization\nAdmin", fillcolor="#E8F1FF", style=filled];
+
+  node [shape=ellipse, style=filled, fillcolor="#FFF4D6"];
+  Plan [label="Configure\nInternship Plan"];
+  Schedule [label="Configure\nSchedule"];
+  DTR [label="Log DTR\nEntry"];
+  Notes [label="Write Daily\nNotes"];
+  Report [label="Generate Weekly\nReport"];
+  Export [label="Export DTR\n/ Report"];
+  Submit [label="Submit for\nReview"];
+  Review [label="Approve / Reject\n/ Request Correction"];
+  Templates [label="Manage\nTemplates"];
+  Organization [label="Manage\nOrganization"];
+  Sync [label="Sync Offline\nDrafts"];
+
+  Intern -> Plan;
+  Intern -> Schedule;
+  Intern -> DTR;
+  Intern -> Notes;
+  Intern -> Report;
+  Intern -> Export;
+  Intern -> Submit;
+  Intern -> Sync;
+  Supervisor -> Review;
+  Supervisor -> Export;
+  Coordinator -> Review;
+  Coordinator -> Export;
+  Admin -> Templates;
+  Admin -> Organization;
+  DTR -> Sync [style=dashed, label="offline-first"];
+  Notes -> Sync [style=dashed, label="offline-first"];
+}
