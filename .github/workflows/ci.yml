@@ -55,7 +55,7 @@ jobs:
             echo "::notice::Skipping pnpm gates until lockfile, turbo config, and workspace packages exist."
           fi
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         if: steps.ready.outputs.value == 'true'
         with:
           version: 11.0.0

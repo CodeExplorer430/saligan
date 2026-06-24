@@ -40,7 +40,7 @@ jobs:
             echo "::notice::Skipping pnpm audit until pnpm-lock.yaml exists."
           fi
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         if: steps.lock.outputs.value == 'true'
         with:
           version: 11.0.0
