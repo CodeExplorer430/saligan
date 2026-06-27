@@ -17,6 +17,7 @@
 | 12-implementation-roadmap.md | Phase-by-phase delivery plan |
 | 13-contributor-guide.md | Contribution and code quality rules |
 | 14-security-baseline.md | Initial security requirements |
+| SPRINT-0-NOTES.md | Bootstrap decisions and validation record |
 
 A compiled DOCX version is available under `docs/docx/SALIGAN-planning-package.docx`.
 

@@ -14,6 +14,8 @@ Tests provide evidence for requirements, regressions, security boundaries, offli
 - Smoke: built app, containers, health endpoints, and basic navigation.
 - Security: unauthenticated, unauthorized, cross-object, cross-role, cross-organization, malicious input, export/attachment access.
 
+Current Sprint 0B coverage uses Vitest for shared constants, Zod validation, Drizzle schema exports, Dexie stores, React shell behavior, connectivity state, and Fastify health routing. Playwright/E2E is planned, not installed.
+
 ## Required Mapping
 
 Each acceptance criterion MUST map to one or more tests or a documented manual check. Behavior fixes MUST include regression tests when feasible.
@@ -25,6 +27,8 @@ Each acceptance criterion MUST map to one or more tests or a documented manual c
 - Freeze time and randomness where needed.
 - Avoid order dependence and external paid services.
 - Integration tests SHOULD use supported PostgreSQL, preferably containerized.
+
+Current database verification applies generated Drizzle migration to Compose PostgreSQL and inspects expected tables.
 
 ## Offline-First Scenarios
 

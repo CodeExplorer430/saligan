@@ -16,7 +16,7 @@ Controls SHOULD align with OWASP ASVS and OWASP API Security Top 10.
 
 ## Authentication and Sessions
 
-When implemented:
+Authentication and sessions are not implemented in Sprint 0B. An accepted ADR is required before user endpoints or credentials are added. When implemented:
 
 - hash passwords with Argon2id using reviewed parameters;
 - use generic authentication errors;
@@ -73,6 +73,12 @@ Logs MUST be structured, access-controlled, and free of credentials, tokens, pas
 - Never use production credentials in development, tests, docs, or CI.
 - Pin and review dependencies; verify maintenance and license.
 - Assess audit findings before upgrades.
+- Run `pnpm audit --audit-level low`; zero known vulnerabilities are permitted, including development-only low and moderate findings.
+- Dependency Review blocks newly introduced high and critical vulnerabilities in runtime, development, and unknown scopes and reports lower-severity findings. Full audit remains stricter and MUST be clean.
+- OpenSSF Scorecard results are informational dependency risk signals and do not independently block Sprint 0 pull requests. They MUST NOT be emitted as warning annotations when the warning would be treated as a vulnerability gate.
+- Keep license review enabled. Add an allowlist only after auditing it for AGPL-3.0-or-later compatibility; do not suppress individual advisories or licenses without documented maintainer acceptance.
+- Secret scanning remains blocking and MUST NOT reduce scan coverage to avoid toolchain warnings.
+- Do not use audit ignores, advisory suppression, `continue-on-error`, or weakened severity thresholds to obtain a pass.
 
 ## Security Escalation
 

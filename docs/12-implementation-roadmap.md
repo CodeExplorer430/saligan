@@ -4,6 +4,8 @@
 
 **Goal:** Make SALIGAN safe for AI-assisted development before writing production features.
 
+**Status:** Local Sprint 0A/0B baseline implemented on `chore/sprint-0b-bootstrap`. Commit, push, remote repository setup, and GitHub Actions execution remain pending.
+
 Deliverables:
 
 - monorepo scaffold;
@@ -12,6 +14,8 @@ Deliverables:
 - CI pipeline for typecheck, lint, test, build, markdownlint;
 - ADR index and documentation index;
 - initial OpenAPI contract and database schema seed.
+
+Current executable OpenAPI contract contains health only. Product endpoint contracts are added with implementation.
 
 ## Phase 1 — Intern self-tracking MVP
 

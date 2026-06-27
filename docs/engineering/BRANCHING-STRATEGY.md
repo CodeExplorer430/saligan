@@ -19,6 +19,8 @@ release/<version>
 
 If no issue exists for permitted maintenance, omit issue number.
 
+Example maintenance branch: `chore/sprint-0b-bootstrap`.
+
 ## Rules
 
 - Keep one coherent purpose per branch.
@@ -28,6 +30,7 @@ If no issue exists for permitted maintenance, omit issue number.
 - Delete merged branches when safe.
 - Never force-push shared branches without owner coordination.
 - Hotfixes still require review, tests, docs, and post-incident follow-up.
+- AI agents require exact operation-specific maintainer approval from `AGENTS.md` before commit, push, PR creation/closure/merge, release, tag, repository-setting, or destructive Git operations.
 
 ## Protection Baseline
 

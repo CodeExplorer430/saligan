@@ -1,5 +1,5 @@
 digraph UseCases {
-  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Use Case Diagram"];
+  graph [rankdir=LR, fontsize=12, fontname="Arial", labelloc=t, label="SALIGAN Planned Product Use Cases — Not Implemented in Sprint 0B"];
   node [fontname="Arial"];
   edge [fontname="Arial", color="#555555"];
 

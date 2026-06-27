@@ -13,7 +13,7 @@ SALIGAN means Student Attendance, Logbook, Internship Goals, Accomplishments, an
 Baseline architecture:
 
 - TypeScript strict-mode pnpm monorepo with Turborepo.
-- React 19, Vite, TanStack Router/Query, Tailwind CSS, shadcn/ui, IndexedDB/Dexie.
+- React 19, Vite, TanStack Router/Query, Tailwind CSS, IndexedDB/Dexie, and PWA/Workbox.
 - NestJS with Fastify, REST, OpenAPI 3.1, Zod.
 - PostgreSQL, Drizzle ORM, reversible or documented migrations.
 - Docker Compose for local and self-hosted deployment.
@@ -91,7 +91,7 @@ Source files MUST remain below 500 physical lines.
 
 - At 350 lines: agent MUST evaluate splitting and record why continued growth is acceptable.
 - At 450 lines: agent MUST refactor before adding logic unless a documented exception applies.
-- Above 500 lines: prohibited without a PR-described exception and maintainer approval.
+- At 500 lines or above: prohibited. Agents MUST NOT weaken or bypass this limit.
 
 Exemptions: generated files, lockfiles, migrations, snapshots, schema dumps, compiled artifacts, and documentation. Exemption does not permit hand-maintained source disguised as generated output.
 
@@ -147,6 +147,33 @@ Major changes are incomplete while docs are stale. Follow `docs/ai/DOCUMENTATION
 - Required CI MUST pass before merge.
 - Never claim a remote workflow passed without observing its result.
 
+### Agent GitOps Approval
+
+AI agents MAY prepare Git and GitHub operations, but MUST receive the matching exact maintainer approval phrase before execution:
+
+| Operation                                                  | Required phrase           |
+| ---------------------------------------------------------- | ------------------------- |
+| `git commit`                                               | `APPROVE COMMIT`          |
+| `git push`                                                 | `APPROVE PUSH`            |
+| `gh pr create`                                             | `APPROVE PR CREATE`       |
+| `gh pr merge` or `gh pr close`                             | `APPROVE MERGE`           |
+| `gh release create`                                        | `APPROVE RELEASE`         |
+| `git tag`                                                  | `APPROVE TAG`             |
+| branch protection, ruleset, or repository settings changes | `APPROVE REPO SETTINGS`   |
+| destructive Git operations                                 | `APPROVE DESTRUCTIVE GIT` |
+
+Before requesting approval, agents MUST show:
+
+- current branch;
+- `git status --short`;
+- `git diff --stat`;
+- proposed commit message when applicable;
+- exact commands to execute;
+- validation results;
+- risks and rollback plan.
+
+Approval authorizes only the named operation. Commit approval does not authorize push, and push approval does not authorize PR creation or any later operation.
+
 ## Multi-Agent Coordination
 
 Follow `docs/ai/AGENT-ORCHESTRATION.md` and `docs/ai/AGENT-HANDOFF-PROTOCOL.md`.
@@ -166,16 +193,22 @@ Before completion, run or report why each applicable command could not run:
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm format:check
+pnpm docs:check
 pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
+pnpm audit --audit-level low
+pnpm source:size
 docker compose config
 ```
 
 When Docker and services exist, also run a containerized smoke test using `docker compose up` or equivalent. Run API health, web smoke, and migration checks when those surfaces exist. Infrastructure, API, database, migration, or cross-service changes MUST use Docker validation when possible.
 
 Local and CI commands MUST remain aligned. See `docs/ai/QUALITY-GATES.md`.
+
+All controllable code, test, build, lint, typecheck, audit, documentation, Docker, and CI warnings and errors MUST be fixed before completion. Known dependency advisories are prohibited, including development-only low-severity findings. Uncontrollable external platform or upstream warnings MUST identify source, owner, reason, follow-up, and explicit maintainer waiver.
 
 ## Definition of Done
 
@@ -189,6 +222,8 @@ Agents MUST NOT say “done,” “complete,” or “ready” unless:
 - source files satisfy size limits;
 - final status and diff were reviewed;
 - remaining risks, follow-ups, and rollback notes are stated.
+- no controllable warnings, errors, or known dependency advisories remain;
+- any external warning has a documented owner, follow-up, and explicit maintainer waiver.
 
 ## Prohibited Actions
 

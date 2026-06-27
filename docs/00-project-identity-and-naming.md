@@ -36,12 +36,13 @@ The word **saligan** also carries the idea of a basis or foundation. That makes 
 | Formal title | `SALIGAN: Student Attendance, Logbook, Internship Goals, Accomplishments, and Notes` |
 | Repository slug | `saligan` |
 | NPM scope suggestion | `@saligan` |
-| App package name | `apps/web-pwa` |
+| Web app package name | `apps/web` |
 | API package name | `apps/api` |
-| Domain package name | `packages/domain` |
+| Shared package name | `packages/shared` |
+| Validation package name | `packages/validation` |
+| Database package name | `packages/database` |
 | UI package name | `packages/ui` |
-| Export package name | `packages/exporters` |
-| Sync package name | `packages/sync` |
+| Configuration package name | `packages/config` |
 
 ## Positioning statement
 

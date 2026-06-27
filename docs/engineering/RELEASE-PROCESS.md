@@ -10,7 +10,7 @@ Release requires maintainer authorization, green required CI, reviewed security 
 2. Select version using Semantic Versioning.
 3. Update release notes/changelog when introduced.
 4. Verify dependency lockfile and reproducible build.
-5. Run full local/CI gates, Docker smoke tests, API/web health checks, and migration checks.
+5. Run frozen install, format/docs, lint, typecheck, tests, build, audit, Docker smoke tests, API/web health checks, and migration checks.
 6. Review security findings, licenses, secrets, images, and artifacts.
 7. Verify backup, upgrade, downgrade/recovery, and configuration notes.
 8. Create reviewed release PR/branch.
@@ -32,3 +32,4 @@ Emergency fixes may reduce normal lead time but MUST NOT bypass authorization, t
 - Reusing mutable release tags.
 - Claiming reproducibility without verification.
 - Shipping known critical security defects without explicit documented maintainer decision.
+- Treating configured but unrun GitHub Actions as release evidence.

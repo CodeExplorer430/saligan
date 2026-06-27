@@ -42,5 +42,5 @@ Describe authorization, validation, sensitive data, logging, export, attachment,
 - [ ] Docker validation ran when infrastructure/services changed.
 - [ ] UI screenshots are attached when applicable.
 - [ ] No secrets or personal data are committed.
-- [ ] Source files remain below 500 lines, or approved exception is explained.
+- [ ] Every non-exempt source file remains below 500 physical lines.
 - [ ] Final diff was reviewed.

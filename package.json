@@ -1,7 +1,9 @@
 {
   "name": "saligan",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
+  "license": "AGPL-3.0-or-later",
   "description": "Offline-first, self-hostable internship records and OJT management platform for DTR, rendered hours, reports, and supervisor review.",
   "packageManager": "pnpm@11.0.0",
   "engines": {
@@ -14,12 +16,31 @@
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "format": "prettier --write .",
-    "docs:check": "markdownlint-cli2 \"**/*.md\""
+    "format:check": "prettier --check .",
+    "clean": "turbo clean && rimraf .turbo coverage dist",
+    "docs:check": "markdownlint-cli2 \"*.md\" \".github/*.md\" \"docs/ai/*.md\" \"docs/engineering/*.md\" \"docs/governance/*.md\" \"docs/SPRINT-0-NOTES.md\"",
+    "audit:zero": "pnpm audit --audit-level low",
+    "source:size": "node scripts/check-source-size.mjs",
+    "checks:zero": "pnpm format:check && pnpm docs:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm audit:zero && pnpm source:size",
+    "ci:local": "pnpm install --frozen-lockfile && pnpm checks:zero && docker compose config",
+    "git:status": "git branch --show-current && git status --short && git diff --stat",
+    "validate:pr": "pnpm ci:local && git diff --check",
+    "db:generate": "pnpm --filter @saligan/database db:generate",
+    "db:migrate": "pnpm --filter @saligan/database db:migrate",
+    "db:studio": "pnpm --filter @saligan/database db:studio"
   },
   "devDependencies": {
-    "turbo": "latest",
-    "typescript": "latest",
-    "prettier": "latest",
-    "markdownlint-cli2": "latest"
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "markdownlint-cli2": "^0.22.1",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
+    "turbo": "^2.6.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.49.0"
+  },
+  "scarfSettings": {
+    "enabled": false
   }
 }

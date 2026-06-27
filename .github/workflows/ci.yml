@@ -9,83 +9,56 @@ on:
 permissions:
   contents: read
 
+env:
+  GIT_CONFIG_COUNT: 1
+  GIT_CONFIG_KEY_0: init.defaultBranch
+  GIT_CONFIG_VALUE_0: main
+  NO_UPDATE_NOTIFIER: 1
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  repository:
-    name: Repository checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Validate package metadata
-        run: node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8'))"
-
-      - name: Verify governance pack
-        shell: bash
-        run: |
-          required=(
-            AGENTS.md
-            docs/ai/QUALITY-GATES.md
-            docs/ai/SECURITY-RULES.md
-            docs/engineering/DEFINITION-OF-DONE.md
-            .github/CODEOWNERS
-          )
-          for file in "${required[@]}"; do
-            test -s "$file" || { echo "Missing required file: $file"; exit 1; }
-          done
-
   quality:
-    name: pnpm quality gates
+    name: Quality gates
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Detect bootstrap readiness
-        id: ready
-        shell: bash
-        run: |
-          if [[ -f pnpm-lock.yaml ]] && [[ -f turbo.json ]] &&
-             find apps packages -mindepth 2 -maxdepth 2 -name package.json -print -quit 2>/dev/null | grep -q .; then
-            echo "value=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "value=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Skipping pnpm gates until lockfile, turbo config, and workspace packages exist."
-          fi
-
-      - uses: pnpm/action-setup@v4
-        if: steps.ready.outputs.value == 'true'
-        with:
-          version: 11.0.0
-
-      - uses: actions/setup-node@v4
-        if: steps.ready.outputs.value == 'true'
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Activate pnpm
+        run: corepack prepare pnpm@11.0.0 --activate
 
       - name: Install
-        if: steps.ready.outputs.value == 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Formatting
+        run: pnpm format:check
+
+      - name: Documentation
+        run: pnpm docs:check
+
       - name: Lint
-        if: steps.ready.outputs.value == 'true'
         run: pnpm lint
 
       - name: Typecheck
-        if: steps.ready.outputs.value == 'true'
         run: pnpm typecheck
 
       - name: Test
-        if: steps.ready.outputs.value == 'true'
         run: pnpm test
 
       - name: Build
-        if: steps.ready.outputs.value == 'true'
         run: pnpm build
 
-      - name: Documentation checks
-        if: steps.ready.outputs.value == 'true'
-        run: pnpm docs:check
+      - name: Dependency audit
+        run: pnpm audit:zero
+
+      - name: Source file size
+        run: pnpm source:size

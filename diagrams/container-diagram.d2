@@ -1,36 +1,38 @@
 direction: right
 
-Intern: Student Intern
-Supervisor: Company Supervisor
-Coordinator: Academic Coordinator
-Admin: Organization Admin
+User: "Developer / future SALIGAN user"
 
 SALIGAN: {
-  label: "SALIGAN
-Student Attendance, Logbook, Internship Goals, Accomplishments, and Notes"
-  WebPWA: "Web PWA
-React + Vite + IndexedDB"
-  API: "API
-NestJS + Fastify + OpenAPI"
-  Domain: "Domain Package
-Time computation + validation"
-  Sync: "Sync Package
-Offline operation queue"
-  Exporters: "Exporters
-PDF/DOCX/XLSX/CSV/ICS"
-  DB: "PostgreSQL
-Canonical records"
-  Storage: "File Storage
-Exports + attachments"
+  label: "SALIGAN Sprint 0B"
+  Web: "apps/web\nReact + Vite + Tailwind\nTanStack Router/Query\nPWA + Dexie placeholders"
+  API: "apps/api\nNestJS + Fastify\nHealth + Swagger"
+  Shared: "packages/shared\nConstants and statuses"
+  Validation: "packages/validation\nZod schemas"
+  Database: "packages/database\nDrizzle schema + migration"
+  UI: "packages/ui\nPlaceholder boundary"
+  Config: "packages/config\nTooling guidance"
+  Postgres: "PostgreSQL 18\nHost 5433 → container 5432"
 }
 
-Intern -> SALIGAN.WebPWA: log DTR, notes, reports
-Supervisor -> SALIGAN.WebPWA: review submissions
-Coordinator -> SALIGAN.WebPWA: monitor progress
-Admin -> SALIGAN.WebPWA: configure org/templates
-SALIGAN.WebPWA -> SALIGAN.Sync: queue offline drafts
-SALIGAN.WebPWA -> SALIGAN.API: REST API
-SALIGAN.API -> SALIGAN.Domain: enforce rules
-SALIGAN.API -> SALIGAN.Exporters: generate files
-SALIGAN.API -> SALIGAN.DB: read/write
-SALIGAN.API -> SALIGAN.Storage: store files
+Planned: {
+  label: "Planned product capabilities"
+  Auth: "Authentication + authorization"
+  Sync: "Synchronization engine"
+  Exports: "Exports + attachments"
+  Reviews: "Supervisor review"
+}
+
+User -> SALIGAN.Web: "uses shell"
+User -> SALIGAN.API: "checks health / Swagger"
+SALIGAN.Web -> SALIGAN.Shared
+SALIGAN.Web -> SALIGAN.Validation
+SALIGAN.Web -> SALIGAN.UI
+SALIGAN.API -> SALIGAN.Shared
+SALIGAN.API -> SALIGAN.Validation
+SALIGAN.Database -> SALIGAN.Postgres: "migrations / future queries"
+SALIGAN.Config -> SALIGAN.Web
+SALIGAN.Config -> SALIGAN.API
+SALIGAN.Web -> Planned.Sync: "future"
+SALIGAN.API -> Planned.Auth: "future"
+SALIGAN.API -> Planned.Exports: "future"
+SALIGAN.API -> Planned.Reviews: "future"
