@@ -85,9 +85,13 @@ Pull request #6 ran the Sprint 0 baseline workflows on 2026-06-24. Quality gates
 
 Latest stable `drizzle-kit@0.31.10` still includes that transitive chain, so a narrowly scoped pnpm override moves only `@esbuild-kit/core-utils` to the first published patched `esbuild` release, `0.25.0`. Additional scoped overrides move Markdown tooling to `markdown-it@14.2.0`, Vite tooling to `esbuild@0.28.1`, and Workbox transitive packages away from deprecated `glob@11.1.0` and `source-map@0.8.0-beta.0`.
 
-The security workflow now uses a zero-advisory audit at low severity. Dependency Review still blocks high and critical additions and reports lower risk, while OpenSSF Scorecard output remains informational. License review remains enabled without an unaudited allowlist.
+The security workflow now uses a zero-advisory audit at low severity. Dependency Review still blocks high and critical additions and reports lower risk, while OpenSSF Scorecard output remains informational and is not emitted as warning annotations. License review remains enabled without an unaudited allowlist.
 
-GitHub Actions were upgraded to Node 24 runtime releases: `actions/checkout@v7`, `actions/setup-node@v6`, `actions/dependency-review-action@v5`, `pnpm/action-setup@v6`, and `gitleaks/gitleaks-action@v3`.
+GitHub Actions were upgraded to Node 24 runtime releases: `actions/checkout@v7`, `actions/setup-node@v6`, and `actions/dependency-review-action@v5`. Workflows use Corepack to activate the exact `packageManager` pnpm version instead of `pnpm/action-setup` so PNPM_HOME layout warnings remain outside the repo. pnpm update notifications are disabled in repository and workflow configuration so validation logs stay warning-free without changing dependency policy. Secret scanning remains blocking through the pinned Gitleaks CLI container `ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f`, scanning full git history after checkout with `fetch-depth: 0`.
+
+Workflow jobs set Git `init.defaultBranch` to `main` through environment-level Git config before checkout to suppress the runner's default-branch hint where checkout honors inherited Git config. If `actions/checkout` or runner internals still emit the hint, treat it as external action/platform noise and track it separately with source, owner, reason, follow-up, and maintainer waiver.
+
+Controllable workflow warnings are blockers. External platform or upstream warnings are not considered fixed by suppression; they must be recorded separately and revisited when the owning action, runner, package, or platform changes.
 
 ### Maintainer-Waived Upstream Warnings
 

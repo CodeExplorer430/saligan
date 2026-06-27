@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+env:
+  GIT_CONFIG_COUNT: 1
+  GIT_CONFIG_KEY_0: init.defaultBranch
+  GIT_CONFIG_VALUE_0: main
+  NO_UPDATE_NOTIFIER: 1
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -20,14 +26,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 11.0.0
-
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Activate pnpm
+        run: corepack prepare pnpm@11.0.0 --activate
 
       - name: Install
         run: pnpm install --frozen-lockfile

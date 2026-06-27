@@ -4,7 +4,7 @@
 
 Agents MUST run every applicable gate or state exact reason it could not run. A skipped gate is not a pass. Failures MUST be reported without weakening checks.
 
-Controllable warnings and errors are failures. A task MUST NOT be marked complete with unresolved warnings unless the warning is external or upstream, its source and owner are recorded, and a maintainer explicitly waives it.
+Controllable warnings and errors are failures, including warnings emitted by maintained workflow configuration. A task MUST NOT be marked complete with unresolved warnings unless the warning is external or upstream, its source and owner are recorded, and a maintainer explicitly waives it.
 
 ## Local Gates
 
@@ -68,13 +68,13 @@ Applicable gates:
 
 Audit findings MUST be assessed, not blindly auto-fixed. `pnpm audit --audit-level low` MUST report zero known vulnerabilities across production and development dependencies.
 
-Dependency Review blocks newly introduced high and critical vulnerabilities across runtime, development, and unknown scopes and reports lower-severity risk for review. Local and CI audit policy remains stricter: every known vulnerability MUST be remediated. OpenSSF Scorecard results remain informational risk signals rather than warning annotations or independent blockers. License review remains enabled without an allowlist until an AGPL-compatible allowlist is audited.
+Dependency Review blocks newly introduced high and critical vulnerabilities across runtime, development, and unknown scopes and reports lower-severity risk for review. Local and CI audit policy remains stricter: every known vulnerability MUST be remediated. OpenSSF Scorecard results remain informational dependency risk signals, not warning annotations or independent vulnerability gates. License review remains enabled without an allowlist until an AGPL-compatible allowlist is audited. Secret scanning remains blocking and MUST cover full git history for pull request security review.
 
 ## Warning Classification
 
 - **Codebase warning:** emitted by project code, tests, lint, typecheck, build, documentation, Docker configuration, or maintained workflow configuration. MUST be fixed.
 - **Dependency advisory:** known vulnerability at any severity or scope. MUST be fixed.
-- **External platform/upstream warning:** emitted by GitHub, runner infrastructure, registry metadata, or an upstream package outside repository control. MUST record source, owner, reason it cannot currently be fixed, follow-up condition, and maintainer waiver.
+- **External platform/upstream warning:** emitted by GitHub, runner infrastructure, registry metadata, or an upstream package outside repository control after maintained workflow configuration has been corrected. MUST record source, owner, reason it cannot currently be fixed, follow-up condition, and maintainer waiver.
 
 ## Documentation Gates
 

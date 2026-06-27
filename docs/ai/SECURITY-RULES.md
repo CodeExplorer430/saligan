@@ -75,8 +75,9 @@ Logs MUST be structured, access-controlled, and free of credentials, tokens, pas
 - Assess audit findings before upgrades.
 - Run `pnpm audit --audit-level low`; zero known vulnerabilities are permitted, including development-only low and moderate findings.
 - Dependency Review blocks newly introduced high and critical vulnerabilities in runtime, development, and unknown scopes and reports lower-severity findings. Full audit remains stricter and MUST be clean.
-- OpenSSF Scorecard results are informational dependency risk signals and do not independently block Sprint 0 pull requests.
+- OpenSSF Scorecard results are informational dependency risk signals and do not independently block Sprint 0 pull requests. They MUST NOT be emitted as warning annotations when the warning would be treated as a vulnerability gate.
 - Keep license review enabled. Add an allowlist only after auditing it for AGPL-3.0-or-later compatibility; do not suppress individual advisories or licenses without documented maintainer acceptance.
+- Secret scanning remains blocking and MUST NOT reduce scan coverage to avoid toolchain warnings.
 - Do not use audit ignores, advisory suppression, `continue-on-error`, or weakened severity thresholds to obtain a pass.
 
 ## Security Escalation
