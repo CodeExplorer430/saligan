@@ -37,7 +37,7 @@
     "prettier": "^3.7.4",
     "rimraf": "^6.1.2",
     "turbo": "^2.6.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.49.0"
   },
   "scarfSettings": {
