@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@saligan/shared": "workspace:*",
-    "@tanstack/react-query": "^5.90.12",
+    "@tanstack/react-query": "^5.101.2",
     "@tanstack/react-router": "^1.140.5",
     "dexie": "^4.2.1",
     "react": "^19.2.1",
